@@ -1,0 +1,69 @@
+{{define "graph"}}
+<div class="section">
+    <form action="/graph" class="graph-form" method="post">
+        <div class="configure">
+            <div class="configure__select">
+                <label for="indep-val">Independent variable</label>
+                <select name="indep-val" id="indep-val" onchange="onchangeIndep()">
+                    <option value="" disabled="" selected="" style="display:none;">Select One...</option>
+                    {{range $i, $in := .}}
+                    <option value="{{$in.Header}}">{{$in.Header}}</option>
+                    {{ end }}
+                </select>
+            </div>
+            <div class="configure__select">
+                <label for="dep-val">Dependent variable</label>
+                <select name="dep-val" id="dep-val" onchange="onchangeDep()">
+                    <option value="" disabled="" selected="" style="display:none;">Select One...</option>
+                    {{range $i, $in := .}}
+                    <option value="{{$in.Header}}">{{$in.Header}}</option>
+                    {{ end }}
+                </select>
+            </div>
+            <button type="submit">Create scatter plot</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function onchangeIndep() {
+        var indep_select = document.getElementById("indep-val");
+        var dep_select = document.getElementById("dep-val");
+        var selectedIndexIndep = findIndexfromOptionName(indep_select, indep_select.value);
+        console.log(selectedIndexIndep)
+        enableAllOptions(dep_select)
+        dep_select.options[selectedIndexIndep].disabled = true;
+    }
+
+    function onchangeDep() {
+        var indep_select = document.getElementById("indep-val");
+        var dep_select = document.getElementById("dep-val");
+        var selectedIndexDep = findIndexfromOptionName(dep_select, dep_select.value);
+        console.log(selectedIndexDep)
+        enableAllOptions(indep_select)
+        indep_select.options[selectedIndexDep].disabled = true;
+    }
+
+    function findIndexfromOptionName(select, optionName) {
+        let options = Array.from(select.options);
+        return options.findIndex((opt) => {
+
+            return opt.label == optionName
+        });
+    }
+
+    function enableAllOptions(select) {
+        let options = Array.from(select.options);
+        return options.findIndex((opt) => {
+            opt.disabled = false
+        });
+    }
+
+    function onClickCreatePlot() {
+        var indep_select = document.getElementById("indep-val");
+        var dep_select = document.getElementById("dep-val");
+
+
+    } 
+</script>
+{{end}}

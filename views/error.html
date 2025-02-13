@@ -1,0 +1,14 @@
+{{template "header" .}}
+<dialog class="dialog dialog--err" open>
+    <h3>CSV file upload failed!</h3>
+    <p>{{ . }}</p>
+    <form method="dialog">
+        <button onclick="onClickDialogErrorButton()">OK</button>
+    </form>
+</dialog>
+<script>
+    function onClickDialogErrorButton() {
+        location.href = "/"
+    }
+</script>
+{{template "footer" .}}

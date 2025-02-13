@@ -1,0 +1,42 @@
+{{template "header" .}}
+
+{{if .Inputs}}
+{{template "graph" .Inputs}}
+{{end}}
+
+{{template "graph-img" .}}
+
+<div class="section">
+    {{if .Inputs }}
+    <div class="container">
+        <table class="table table__input-values">
+            {{$ln := 0}}
+            <thead>
+                <tr>
+                    <th>#</th>
+                    {{range $in := .Inputs}}
+                    {{$ln = $in.Values}}
+                    <th>{{$in.Header}}</th>
+                    {{end}}
+                </tr>
+            </thead>
+            <tbody>
+                {{ $inputs := .Inputs}}
+                {{ range $i, $k := $ln }}
+                <tr>
+                    <td>{{$i}}</td>
+                    {{ range $j, $in := $inputs }}
+
+                    {{$vals := $in.Values}}
+                    {{$idx := index $vals $i}}
+                    <td>{{$idx}}</td>
+                    {{ end }}
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
+    {{end}}
+</div>
+
+{{template "footer" .}}

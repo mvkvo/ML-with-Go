@@ -1,0 +1,48 @@
+{{define "file-upload"}}
+<div class="section">
+    <form action="/browse" id="upload-file-form" class="upload-form" method="post" enctype="multipart/form-data">
+        <label for="csv-file" id="upload-file-input-label" class="custom-file-upload">
+            Choose file
+        </label>
+        <input id="csv-file" type="file" name="dataset-file" accept=".csv" onchange="onChangeInputVal()">
+        <input type="submit" onclick="onClickBrowse()" value="Browse dataset">
+    </form>
+</div>
+
+<script>
+    function onClickBrowse() {
+        var dialog = document.getElementById("bd-dialog");
+        dialog.showModal();
+    }
+
+    function onChangeInputVal() {
+        document.getElementById("upload-file-form").submit();
+
+    }
+</script>
+{{end}}
+
+{{define "select-features"}}
+<dialog id="bd-dialog" class="dialog dialog--select" open>
+    <form action="/upload" class="upload-form" method="post">
+        <label for=" headers">
+            <h3>Choose values:</h3>
+        </label>
+        <label id="filename-label"></label>
+        <select name="headers" id="headers" multiple>
+            {{range $i, $in := .Inputs}}
+            <option value="{{$in.Header}}">{{$in.Header}}</option>
+            {{ end }}
+        </select>
+        <input type="submit" onclick="onClick()" value="Confirm choises">
+        <button type="button" onclick="onClick()">Close</button>
+    </form>
+</dialog>
+
+<script>
+    function onClick() {
+        var dialog = document.getElementById("bd-dialog");
+        dialog.close();
+    }
+</script>
+{{end}}
